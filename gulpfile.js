@@ -4,10 +4,10 @@ var msbuild = require('gulp-msbuild');
 var download = require("gulp-download");
 var del = require('del');
 var assemblyInfo = require('gulp-dotnet-assembly-info');
-var version = '1.0.1';
+var version = '1.0.2';
 
 gulp.task('clean', ()=>{
-    return del['./**/bin', './**/obj', 'nuget.exe', 'nupkgs']
+    return del(['src/**/obj/', 'src/**/bin/Release', 'nuget.exe', 'nupkgs', 'packages'])
 });
 gulp.task('downloadNuget', ['clean'], ()=>{
     return download('https://dist.nuget.org/win-x86-commandline/latest/nuget.exe')
@@ -39,7 +39,8 @@ gulp.task('pack', ['build'], ()=>{
    return gulp.src(['src/CompressR.MVC4/*.csproj', 'src/CompressR.MVC5/*.csproj', 'src/CompressR.WebApi/*.csproj'])
     .pipe(nuget.pack({
         build: false,
-        properties: 'configuration=release',
+        symbols: true,
+        properties: 'configuration=Release',
         outputDirectory: './nupkgs'
     }));
 });
