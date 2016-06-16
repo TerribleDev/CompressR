@@ -4,7 +4,7 @@ var msbuild = require('gulp-msbuild');
 var download = require("gulp-download");
 var del = require('del');
 var assemblyInfo = require('gulp-dotnet-assembly-info');
-var version = '1.0.0';
+var version = '1.0.1';
 
 gulp.task('clean', ()=>{
     return del['./**/bin', './**/obj', 'nuget.exe', 'nupkgs']
@@ -46,5 +46,5 @@ gulp.task('pack', ['build'], ()=>{
 
 gulp.task('publish', ['pack'], ()=>{
      return gulp.src('./nupkgs/*.nupkg')
-    .pipe(nuget.push({ nuget: "nuget.exe", source: 'https://www.nuget.org/api/v2/package', apiKey: '158f98f2-f9e6-4490-9382-8b49ebda9cc7'}));
+    .pipe(nuget.push({ nuget: "nuget.exe", source: 'https://www.nuget.org/api/v2/package', apiKey: process.env.nugetApiKey}));
 });

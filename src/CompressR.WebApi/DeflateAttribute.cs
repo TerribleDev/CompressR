@@ -24,7 +24,7 @@ namespace CompressR.WebApi
                 .Select(a => a.Value)
                 .Any(a => a.Equals(Constants.Deflate, StringComparison.OrdinalIgnoreCase));
 
-            if (acceptedEncoding)
+            if (!acceptedEncoding)
             {
                 return;
             }
@@ -41,7 +41,7 @@ namespace CompressR.WebApi
             .Select(a => a.Value)
             .Any(a => a.Equals(Constants.Deflate, StringComparison.OrdinalIgnoreCase));
 
-            if (acceptedEncoding)
+            if (!acceptedEncoding)
             {
                 return;
             }
