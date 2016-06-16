@@ -1,0 +1,20 @@
+{
+  "name": "compressr",
+  "version": "1.0.0",
+  "description": "CompressR is a set of nuget packages that help you implement compression on your MVC, and WebApi Actions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-dotnet-assembly-info": "^0.1.11",
+    "gulp-download": "0.0.1",
+    "gulp-msbuild": "^0.3.2",
+    "gulp-nuget": "^1.0.1"
+  }
+}
