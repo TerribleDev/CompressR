@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompressR.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace CompressR.WebApi
             if (string.IsNullOrWhiteSpace(acceptedEncoding))
             {
                 if (RequireCompression)
-                    throw new Exception("Compression required but client did not send accept header");
+                    throw new CompressRException("Compression required but client did not send accept header");
                 else
                     return;
             }
