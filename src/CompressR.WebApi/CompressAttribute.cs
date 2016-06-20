@@ -37,7 +37,7 @@ namespace CompressR.WebApi
             {
                 if (RequireCompression)
                 {
-                    throw new CompressRException("Compression required but client did not send accept header")
+                    throw new CompressRException("Compression required but client did not send accept header");
                 }
                 else
                 {

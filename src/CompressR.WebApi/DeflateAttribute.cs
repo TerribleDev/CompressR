@@ -14,6 +14,13 @@ namespace CompressR.WebApi
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public sealed class DeflateAttribute : System.Web.Http.Filters.ActionFilterAttribute
     {
+        private bool RequireCompression { get; set; }
+
+        public DeflateAttribute(bool requireCompression = false)
+        {
+            RequireCompression = requireCompression;
+        }
+
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             var acceptedEncoding = actionExecutedContext

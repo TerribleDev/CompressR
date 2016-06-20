@@ -13,6 +13,13 @@ namespace CompressR.WebApi
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public sealed class GzipAttribute : System.Web.Http.Filters.ActionFilterAttribute
     {
+        private bool RequireCompression { get; set; }
+
+        public GzipAttribute(bool requireCompression = false)
+        {
+            RequireCompression = requireCompression;
+        }
+
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             var acceptedEncoding = actionExecutedContext

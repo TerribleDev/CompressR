@@ -15,11 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressR.Sample", "src\Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressR", "src\CompressR\CompressR.csproj", "{C94378C3-4AA8-4F49-8720-77D14B62F72E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99494CD9-7FF3-4FFF-B1A4-51CE56BA2D94}"
-	ProjectSection(SolutionItems) = preProject
-		gulpfile.js = gulpfile.js
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\CompressR.MVC\CompressR.MVC.projitems*{b8889368-e350-4b1e-82f5-ea537d6da6e9}*SharedItemsImports = 4
