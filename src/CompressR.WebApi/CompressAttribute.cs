@@ -36,9 +36,14 @@ namespace CompressR.WebApi
             if (string.IsNullOrWhiteSpace(acceptedEncoding))
             {
                 if (RequireCompression)
-                    throw new CompressRException("Compression required but client did not send accept header");
+                {
+                    throw new CompressRException("Compression required but client did not send accept header")
+                }
                 else
+                {
                     return;
+                }
+                    
             }
 
             actionExecutedContext.Response.Content = new CompressedContent(actionExecutedContext.Response.Content, acceptedEncoding);
