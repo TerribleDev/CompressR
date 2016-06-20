@@ -1,4 +1,4 @@
-version: 1.2.0
+version: 1.2.{build}
 configuration: Release
 platform: Any CPU
 assembly_info:
@@ -10,6 +10,8 @@ assembly_info:
 nuget:
   account_feed: true
   project_feed: true
+before_build:
+- cmd: nuget restore
 build:
   publish_nuget: true
   publish_nuget_symbols: true
