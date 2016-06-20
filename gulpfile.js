@@ -48,5 +48,5 @@ gulp.task('pack', ['build'], ()=>{
 
 gulp.task('publish', ['pack'], ()=>{
      return gulp.src('./nupkgs/*.nupkg')
-    .pipe(nuget.push({ nuget: "nuget.exe", source: 'https://www.nuget.org/api/v2/package', apiKey: '9d1cc8fb-2c00-47cc-93ff-153a8871052d'}));
+    .pipe(nuget.push({ nuget: "nuget.exe", source: 'https://www.nuget.org/api/v2/package', apiKey: process.env.nugetApiKey}));
 });

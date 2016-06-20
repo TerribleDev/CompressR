@@ -23,6 +23,10 @@ namespace CompressR.WebApi
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
+            if(actionExecutedContext.Response.Content == null)
+            {
+                return;
+            }
             var acceptedEncoding = actionExecutedContext
                 .Response
                 .RequestMessage
@@ -40,6 +44,10 @@ namespace CompressR.WebApi
 
         public override async Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
+            if(actionExecutedContext.Response.Content == null)
+            {
+                return;
+            }
             var acceptedEncoding = actionExecutedContext
             .Response
             .RequestMessage
