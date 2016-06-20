@@ -1,0 +1,7 @@
+version: 1.0.{build}
+build_script:
+- cmd: >-
+    npm install
+
+    node_modules\\.bin\\gulp.cmd pack
+test: off
