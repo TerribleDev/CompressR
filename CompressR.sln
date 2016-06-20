@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressR.WebApi", "src\Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressR.Sample", "src\CompressR.Sample\CompressR.Sample.csproj", "{2FA56DF3-C7B2-4070-B41A-FE328D96961C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressR", "src\CompressR\CompressR.csproj", "{C94378C3-4AA8-4F49-8720-77D14B62F72E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\CompressR.MVC\CompressR.MVC.projitems*{b8889368-e350-4b1e-82f5-ea537d6da6e9}*SharedItemsImports = 4
@@ -40,6 +42,10 @@ Global
 		{2FA56DF3-C7B2-4070-B41A-FE328D96961C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FA56DF3-C7B2-4070-B41A-FE328D96961C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FA56DF3-C7B2-4070-B41A-FE328D96961C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C94378C3-4AA8-4F49-8720-77D14B62F72E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C94378C3-4AA8-4F49-8720-77D14B62F72E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C94378C3-4AA8-4F49-8720-77D14B62F72E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C94378C3-4AA8-4F49-8720-77D14B62F72E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
