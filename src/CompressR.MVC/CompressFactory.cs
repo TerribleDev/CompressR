@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompressR.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
@@ -8,24 +9,38 @@ namespace CompressR.MVC
 {
     public static class CompressFactory
     {
-        public static void Compress(string compression, System.Web.Mvc.ActionExecutingContext filterContext)
+        public static void Compress(string compression, System.Web.Mvc.ActionExecutingContext filterContext, bool requireCompression)
         {
             var context = filterContext.RequestContext.HttpContext;
             var compressionAccepted = context.Request.Headers.Get(Constants.AcceptEncoding)?.Split(',').Trim().Any(a => string.Equals(a, compression, StringComparison.OrdinalIgnoreCase)) ?? false;
             if (!compressionAccepted)
             {
-                return;
+                if (requireCompression)
+                {
+                    throw new CompressRException("Compression required but client did not send accept header");
+                }
+                else
+                {
+                    return;
+                }
             }
+
+
+
             HandleCompression(compression, filterContext);
         }
 
-        public static void Compress(System.Web.Mvc.ActionExecutingContext filterContext)
+        public static void Compress(System.Web.Mvc.ActionExecutingContext filterContext, bool requireCompression)
         {
             var context = filterContext.RequestContext.HttpContext;
             var compressionAlgorithm = context.Request.Headers.Get(Constants.AcceptEncoding)?.Split(',').Trim().Intersect(Constants.Compressors, StringComparer.OrdinalIgnoreCase)?.FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(compressionAlgorithm))
             {
                 HandleCompression(compressionAlgorithm, filterContext);
+            }
+            else if(requireCompression)
+            {
+                throw new CompressRException("Compression required but client did not send accept header");
             }
         }
 
