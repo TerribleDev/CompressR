@@ -13,8 +13,19 @@ namespace CompressR.WebApi
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public sealed class GzipAttribute : System.Web.Http.Filters.ActionFilterAttribute
     {
+        private bool RequireCompression { get; set; }
+
+        public GzipAttribute(bool requireCompression = false)
+        {
+            RequireCompression = requireCompression;
+        }
+
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
+            if(actionExecutedContext.Response.Content == null)
+            {
+                return;
+            }
             var acceptedEncoding = actionExecutedContext
                 .Response
                 .RequestMessage
@@ -23,7 +34,7 @@ namespace CompressR.WebApi
                 .Select(a => a.Value)
                 .Any(a => a.Equals(Constants.Gzip, StringComparison.OrdinalIgnoreCase));
 
-            if (acceptedEncoding)
+            if (!acceptedEncoding)
             {
                 return;
             }
@@ -32,6 +43,10 @@ namespace CompressR.WebApi
 
         public override async Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
+            if(actionExecutedContext.Response.Content == null)
+            {
+                return;
+            }
             var acceptedEncoding = actionExecutedContext
             .Response
             .RequestMessage
@@ -40,7 +55,7 @@ namespace CompressR.WebApi
             .Select(a => a.Value)
             .Any(a => a.Equals(Constants.Gzip, StringComparison.OrdinalIgnoreCase));
 
-            if (acceptedEncoding)
+            if (!acceptedEncoding)
             {
                 return;
             }

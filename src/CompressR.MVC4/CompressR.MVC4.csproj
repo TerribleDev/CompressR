@@ -75,6 +75,12 @@
     <None Include="CompressR.MVC4.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CompressR\CompressR.csproj">
+      <Project>{c94378c3-4aa8-4f49-8720-77d14b62f72e}</Project>
+      <Name>CompressR</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\CompressR.MVC\CompressR.MVC.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

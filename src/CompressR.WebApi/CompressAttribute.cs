@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompressR.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
@@ -14,8 +15,19 @@ namespace CompressR.WebApi
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public sealed class CompressAttribute : System.Web.Http.Filters.ActionFilterAttribute
     {
+        private bool RequireCompression { get; set; }
+
+        public CompressAttribute(bool requireCompression = false)
+        {
+            RequireCompression = requireCompression;
+        }
+
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
+            if(actionExecutedContext.Response.Content == null)
+            {
+                return;
+            }
             var acceptedEncoding = actionExecutedContext
                 .Response
                 .RequestMessage
@@ -27,14 +39,25 @@ namespace CompressR.WebApi
 
             if (string.IsNullOrWhiteSpace(acceptedEncoding))
             {
-                return;
+                if (RequireCompression)
+                {
+                    throw new CompressRException("Compression required but client did not send accept header");
+                }
+                else
+                {
+                    return;
+                }
+                    
             }
-
             actionExecutedContext.Response.Content = new CompressedContent(actionExecutedContext.Response.Content, acceptedEncoding);
         }
 
         public override async Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
+            if(actionExecutedContext.Response.Content == null)
+            {
+                return;
+            }
             var acceptedEncoding = actionExecutedContext
                 .Response
                 .RequestMessage
@@ -48,7 +71,7 @@ namespace CompressR.WebApi
             {
                 return;
             }
-
+            
             actionExecutedContext.Response.Content = new CompressedContent(actionExecutedContext.Response.Content, acceptedEncoding);
         }
     }
