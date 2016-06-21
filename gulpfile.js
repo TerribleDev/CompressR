@@ -5,7 +5,7 @@ var download = require("gulp-download");
 var del = require('del');
 var assemblyInfo = require('gulp-dotnet-assembly-info');
 var xunit = xunit = require('gulp-xunit-runner');
-var version = '1.2.1';
+var version = '1.2.2';
 
 gulp.task('clean', ()=>{
     return del(['src/**/obj/', 'src/**/bin/Release', 'nuget.exe', 'nupkgs'])
@@ -24,6 +24,8 @@ gulp.task('patchAssemblyInfo', ()=>{
     .pipe(assemblyInfo({
         version: function(value) { return version; },
         fileVersion: function(value) { return version; },
+        company: 'Tommy Parnell',
+        copyright: 'Copyright © Tommy Parnell 2016'
     }))
     .pipe(gulp.dest('.'))
 });
