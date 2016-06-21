@@ -16,5 +16,8 @@
     "gulp-download": "0.0.1",
     "gulp-msbuild": "^0.3.2",
     "gulp-nuget": "^1.0.1"
+  },
+  "devDependencies": {
+    "gulp-xunit-runner": "^0.1.1"
   }
 }

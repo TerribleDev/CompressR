@@ -4,6 +4,7 @@ var msbuild = require('gulp-msbuild');
 var download = require("gulp-download");
 var del = require('del');
 var assemblyInfo = require('gulp-dotnet-assembly-info');
+var xunit = xunit = require('gulp-xunit-runner');
 var version = '1.2.0';
 
 gulp.task('clean', ()=>{
@@ -27,16 +28,21 @@ gulp.task('patchAssemblyInfo', ()=>{
     .pipe(gulp.dest('.'))
 });
 gulp.task('build', ['restore', 'patchAssemblyInfo'], ()=>{
-     return gulp.src('./CompressR.sln')
+     return gulp.src('./CompressR.sln', {read: false})
     .pipe(msbuild({
         stdout: true,
         toolsVersion: 14,
         configuration: 'Release'
     })); 
 });
-
-gulp.task('pack', ['build'], ()=>{
-   return gulp.src(['src/CompressR.MVC4/*.csproj', 'src/CompressR.MVC5/*.csproj', 'src/CompressR.WebApi/*.csproj', 'src/CompressR/*.csproj'])
+gulp.task('test', ['build'],  function () {
+  return gulp.src(['src/*UnitTests/bin/Release/*UnitTests.dll'], {read: false})
+    .pipe(xunit({
+      executable: './packages/xunit.runner.console.2.1.0/tools/xunit.console.exe',
+    }));
+});
+gulp.task('pack', ['test'], ()=>{
+   return gulp.src(['src/CompressR.MVC4/*.csproj', 'src/CompressR.MVC5/*.csproj', 'src/CompressR.WebApi/*.csproj', 'src/CompressR/*.csproj'], {read: false})
     .pipe(nuget.pack({
         build: false,
         symbols: true,
@@ -47,6 +53,6 @@ gulp.task('pack', ['build'], ()=>{
 });
 
 gulp.task('publish', ['pack'], ()=>{
-     return gulp.src(['!./nupkgs/*.symbols.nupkg','./nupkgs/*.nupkg'])
+     return gulp.src(['!./nupkgs/*.symbols.nupkg','./nupkgs/*.nupkg'], {read: false})
     .pipe(nuget.push({ nuget: "nuget.exe", source: 'https://www.nuget.org/api/v2/package', apiKey: process.env.nugetApiKey}));
 });
