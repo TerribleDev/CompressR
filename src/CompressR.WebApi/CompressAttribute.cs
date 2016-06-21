@@ -24,6 +24,12 @@ namespace CompressR.WebApi
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
+            OnActionExecutedAsync(actionExecutedContext, CancellationToken.None).Wait();
+
+        }
+
+        public override async Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
+        {
             if(actionExecutedContext.Response.Content == null)
             {
                 return;
@@ -47,31 +53,9 @@ namespace CompressR.WebApi
                 {
                     return;
                 }
-                    
-            }
-            actionExecutedContext.Response.Content = new CompressedContent(actionExecutedContext.Response.Content, acceptedEncoding);
-        }
 
-        public override async Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
-        {
-            if(actionExecutedContext.Response.Content == null)
-            {
-                return;
             }
-            var acceptedEncoding = actionExecutedContext
-                .Response
-                .RequestMessage
-                .Headers
-                .AcceptEncoding
-                .Select(a => a.Value)
-                .Intersect(Constants.Compressors, StringComparer.OrdinalIgnoreCase)
-                .FirstOrDefault();
 
-            if (string.IsNullOrWhiteSpace(acceptedEncoding))
-            {
-                return;
-            }
-            
             actionExecutedContext.Response.Content = new CompressedContent(actionExecutedContext.Response.Content, acceptedEncoding);
         }
     }

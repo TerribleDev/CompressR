@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace CompressR.Sample.Controllers
@@ -23,19 +24,29 @@ namespace CompressR.Sample.Controllers
             return "value";
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
+        [Compress]
+        [HttpGet, Route("TestJsonSerialization")]
+        public async Task<IHttpActionResult> TestJsonSerialization()
         {
+            return Ok(new
+            {
+                A = 1,
+                B = new string[] { "1", "A", "B" }
+
+            });
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        [Compress(requireCompression: true)]
+        [HttpGet, Route("TestJsonSerialization2")]
+        public async Task<HttpResponseMessage> TestJsonSerialization2()
         {
+            return Request.CreateResponse(new
+            {
+                A = 1,
+                B = new string[] { "1", "A", "B" }
+
+            });
         }
 
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
     }
 }
