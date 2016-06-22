@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84E10868-C75C-4FDF-8AE1-465F1593A211}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		gulpfile.js = gulpfile.js
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressR.WebApiUnitTests", "src\CompressR.WebApiUnitTests\CompressR.WebApiUnitTests.csproj", "{61D97564-ACF6-4396-AB96-2D29CDCC3814}"

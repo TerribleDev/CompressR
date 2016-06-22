@@ -4,14 +4,11 @@ using System.Linq;
 
 namespace CompressR.MVC
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public sealed class GzipAttribute : System.Web.Mvc.ActionFilterAttribute
+    public sealed class GzipAttribute : BaseCompressAttribute
     {
-        private bool RequireCompression { get; set; }
-
         public GzipAttribute(bool requireCompression = false)
+            : base(requireCompression)
         {
-            RequireCompression = requireCompression;
         }
 
         /// <summary>
@@ -21,7 +18,7 @@ namespace CompressR.MVC
         /// <param name="filterContext"></param>
         public override void OnActionExecuting(System.Web.Mvc.ActionExecutingContext filterContext)
         {
-            CompressFactory.Compress(Constants.Gzip, filterContext, RequireCompression);
+            CompressFactory.Compress(filterContext, RequireCompression, Constants.Gzip, CompressionLevel);
         }
     }
 }

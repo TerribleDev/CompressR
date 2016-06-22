@@ -1,11 +1,11 @@
-﻿using CompressR.WebApi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using CompressR.WebApi;
 
 namespace CompressR.Sample.Controllers
 {
@@ -32,7 +32,6 @@ namespace CompressR.Sample.Controllers
             {
                 A = 1,
                 B = new string[] { "1", "A", "B" }
-
             });
         }
 
@@ -44,9 +43,7 @@ namespace CompressR.Sample.Controllers
             {
                 A = 1,
                 B = new string[] { "1", "A", "B" }
-
             });
         }
-
     }
 }

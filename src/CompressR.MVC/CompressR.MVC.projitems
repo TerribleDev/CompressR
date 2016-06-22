@@ -9,6 +9,7 @@
     <Import_RootNamespace>CompressR.MVC</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseCompressAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CompressAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CompressFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
