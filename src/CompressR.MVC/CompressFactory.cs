@@ -1,21 +1,21 @@
-﻿using CompressR.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using CompressR.Exceptions;
 
 namespace CompressR.MVC
 {
     public static class CompressFactory
     {
-        public static void Compress(string compression, System.Web.Mvc.ActionExecutingContext filterContext, bool requireCompression)
+        public static void Compress(System.Web.Mvc.ActionExecutingContext filterContext, bool requireCompression, string compression, CompressionLevel compressLevel = CompressionLevel.Optimal)
         {
             var context = filterContext.RequestContext.HttpContext;
             var compressionAccepted = context.Request.Headers.Get(Constants.AcceptEncoding)?.Split(',').Trim().Any(a => string.Equals(a, compression, StringComparison.OrdinalIgnoreCase)) ?? false;
-            if (!compressionAccepted)
+            if(!compressionAccepted)
             {
-                if (requireCompression)
+                if(requireCompression)
                 {
                     throw new CompressRException("Compression required but client did not send accept header");
                 }
@@ -25,18 +25,16 @@ namespace CompressR.MVC
                 }
             }
 
-
-
-            HandleCompression(compression, filterContext);
+            HandleCompression(compression, filterContext, compressLevel);
         }
 
-        public static void Compress(System.Web.Mvc.ActionExecutingContext filterContext, bool requireCompression)
+        public static void Compress(System.Web.Mvc.ActionExecutingContext filterContext, bool requireCompression, CompressionLevel compressLevel = CompressionLevel.Optimal)
         {
             var context = filterContext.RequestContext.HttpContext;
             var compressionAlgorithm = context.Request.Headers.Get(Constants.AcceptEncoding)?.Split(',').Trim().Intersect(Constants.Compressors, StringComparer.OrdinalIgnoreCase)?.FirstOrDefault();
-            if (!string.IsNullOrWhiteSpace(compressionAlgorithm))
+            if(!string.IsNullOrWhiteSpace(compressionAlgorithm))
             {
-                HandleCompression(compressionAlgorithm, filterContext);
+                HandleCompression(compressionAlgorithm, filterContext, compressLevel);
             }
             else if(requireCompression)
             {
@@ -44,19 +42,19 @@ namespace CompressR.MVC
             }
         }
 
-        private static void HandleCompression(string compression, System.Web.Mvc.ActionExecutingContext filterContext)
+        private static void HandleCompression(string compression, System.Web.Mvc.ActionExecutingContext filterContext, CompressionLevel compressLevel = CompressionLevel.Optimal)
         {
             var context = filterContext.RequestContext.HttpContext;
-            switch (compression)
+            switch(compression)
             {
                 case Constants.Gzip:
-                    context.Response.Filter = new GZipStream(context.Response.Filter, CompressionMode.Compress);
+                    context.Response.Filter = new GZipStream(context.Response.Filter, compressLevel);
                     context.Response.AppendHeader(Constants.ContentEncoding, Constants.Gzip);
                     context.Response.Cache.VaryByHeaders[Constants.AcceptEncoding] = true;
                     break;
 
                 case Constants.Deflate:
-                    context.Response.Filter = new DeflateStream(context.Response.Filter, CompressionMode.Compress);
+                    context.Response.Filter = new DeflateStream(context.Response.Filter, compressLevel);
                     context.Response.AppendHeader(Constants.ContentEncoding, Constants.Deflate);
                     context.Response.Cache.VaryByHeaders[Constants.AcceptEncoding] = true;
                     break;

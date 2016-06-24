@@ -1,62 +1,22 @@
-﻿using CompressR.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.IO.Compression;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
 namespace CompressR.WebApi
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public sealed class CompressAttribute : System.Web.Http.Filters.ActionFilterAttribute
+    public sealed class CompressAttribute : BaseCompressAttribute
     {
-        private bool RequireCompression { get; set; }
-
         public CompressAttribute(bool requireCompression = false)
-        {
-            RequireCompression = requireCompression;
-        }
+            : base(requireCompression) { }
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            OnActionExecutedAsync(actionExecutedContext, CancellationToken.None).Wait();
-
+            base.CompressAction(actionExecutedContext, Constants.Compressors).Wait();
         }
 
-        public override async Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
+        public override Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
-            if(actionExecutedContext.Response.Content == null)
-            {
-                return;
-            }
-            var acceptedEncoding = actionExecutedContext
-                .Response
-                .RequestMessage
-                .Headers
-                .AcceptEncoding
-                .Select(a => a.Value)
-                .Intersect(Constants.Compressors, StringComparer.OrdinalIgnoreCase)
-                .FirstOrDefault();
-
-            if (string.IsNullOrWhiteSpace(acceptedEncoding))
-            {
-                if (RequireCompression)
-                {
-                    throw new CompressRException("Compression required but client did not send accept header");
-                }
-                else
-                {
-                    return;
-                }
-
-            }
-
-            actionExecutedContext.Response.Content = new CompressedContent(actionExecutedContext.Response.Content, acceptedEncoding);
+            return base.CompressAction(actionExecutedContext, Constants.Compressors);
         }
     }
 }

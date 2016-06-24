@@ -9,12 +9,13 @@ namespace CompressR.WebApi
 {
     public class CompressedContent : HttpContent
     {
+        private readonly CompressionLevel compressionLevel;
         private readonly string _encodingType;
         private readonly HttpContent _originalContent;
 
-        public CompressedContent(HttpContent content, string encodingType = "gzip")
+        public CompressedContent(HttpContent content, string encodingType = "gzip", CompressionLevel compressionLevel = CompressionLevel.Optimal)
         {
-            if (content == null)
+            if(content == null)
             {
                 throw new ArgumentNullException("content");
             }
@@ -22,11 +23,12 @@ namespace CompressR.WebApi
             _originalContent = content;
             _encodingType = encodingType.ToLowerInvariant();
 
-            foreach (var header in _originalContent.Headers)
+            foreach(var header in _originalContent.Headers)
             {
                 Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
             Headers.ContentEncoding.Add(encodingType);
+            this.compressionLevel = compressionLevel;
         }
 
         protected override bool TryComputeLength(out long length)
@@ -38,14 +40,14 @@ namespace CompressR.WebApi
         protected override Task SerializeToStreamAsync(Stream stream, TransportContext context)
         {
             Stream compressedStream = null;
-            switch (_encodingType)
+            switch(_encodingType)
             {
                 case Constants.Gzip:
-                    compressedStream = new GZipStream(stream, CompressionMode.Compress, true);
+                    compressedStream = new GZipStream(stream, compressionLevel, true);
                     break;
 
                 case Constants.Deflate:
-                    compressedStream = new DeflateStream(stream, CompressionMode.Compress, true);
+                    compressedStream = new DeflateStream(stream, compressionLevel, true);
                     break;
 
                 default:
@@ -55,7 +57,7 @@ namespace CompressR.WebApi
 
             return _originalContent.CopyToAsync(compressedStream).ContinueWith(tsk =>
             {
-                if (compressedStream != null)
+                if(compressedStream != null)
                 {
                     compressedStream.Dispose();
                 }

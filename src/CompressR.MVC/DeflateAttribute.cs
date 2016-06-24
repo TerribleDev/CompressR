@@ -5,13 +5,11 @@ using System.Linq;
 namespace CompressR.MVC
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public sealed class DeflateAttribute : System.Web.Mvc.ActionFilterAttribute
+    public sealed class DeflateAttribute : BaseCompressAttribute
     {
-        private bool RequireCompression { get; set; }
-
         public DeflateAttribute(bool requireCompression = false)
+            : base(requireCompression)
         {
-            RequireCompression = requireCompression;
         }
 
         /// <summary>
@@ -21,7 +19,7 @@ namespace CompressR.MVC
         /// <param name="filterContext"></param>
         public override void OnActionExecuting(System.Web.Mvc.ActionExecutingContext filterContext)
         {
-            CompressFactory.Compress(Constants.Deflate, filterContext, RequireCompression);
+            CompressFactory.Compress(filterContext, RequireCompression, Constants.Deflate, CompressionLevel);
         }
     }
 }

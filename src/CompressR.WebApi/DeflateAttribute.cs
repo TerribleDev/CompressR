@@ -1,5 +1,4 @@
-﻿using CompressR.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
@@ -9,49 +8,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using CompressR.Exceptions;
 
 namespace CompressR.WebApi
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public sealed class DeflateAttribute : System.Web.Http.Filters.ActionFilterAttribute
+    public sealed class DeflateAttribute : BaseCompressAttribute
     {
-        private bool RequireCompression { get; set; }
-
         public DeflateAttribute(bool requireCompression = false)
-        {
-            RequireCompression = requireCompression;
-        }
+            : base(requireCompression) { }
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            OnActionExecutedAsync(actionExecutedContext, CancellationToken.None).Wait();
+            base.CompressAction(actionExecutedContext, Constants.Deflate).Wait();
         }
 
-        public override async Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
+        public override Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
-            if(actionExecutedContext.Response.Content == null)
-            {
-                return;
-            }
-            var acceptedEncoding = actionExecutedContext
-            .Response
-            .RequestMessage
-            .Headers
-            .AcceptEncoding
-            .Select(a => a.Value)
-            .Any(a => a.Equals(Constants.Deflate, StringComparison.OrdinalIgnoreCase));
-
-            if (!acceptedEncoding && RequireCompression)
-            {
-                throw new CompressRException("Compression required but client did not send accept header");
-            }
-
-            if (!acceptedEncoding)
-            {
-                return;
-            }
-
-            actionExecutedContext.Response.Content = new CompressedContent(actionExecutedContext.Response.Content, Constants.Deflate);
+            return base.CompressAction(actionExecutedContext, Constants.Deflate);
         }
     }
 }
