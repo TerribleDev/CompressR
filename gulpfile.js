@@ -5,7 +5,7 @@ var download = require("gulp-download");
 var del = require('del');
 var assemblyInfo = require('gulp-dotnet-assembly-info');
 var xunit = xunit = require('gulp-xunit-runner');
-var version = '1.3.2';
+var version = '1.4.0';
 
 gulp.task('clean', ()=>{
     return del(['src/**/obj/', 'src/**/bin/Release', 'nuget.exe', 'nupkgs'])

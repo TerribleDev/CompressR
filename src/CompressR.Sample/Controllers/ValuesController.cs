@@ -17,6 +17,7 @@ namespace CompressR.Sample.Controllers
         {
             return new string[] { "value1", "value2" };
         }
+        [Deflate]
 
         // GET api/values/5
         public string Get(int id)
@@ -24,7 +25,7 @@ namespace CompressR.Sample.Controllers
             return "value";
         }
 
-        [Compress]
+        [Gzip]
         [HttpGet, Route("TestJsonSerialization")]
         public async Task<IHttpActionResult> TestJsonSerialization()
         {

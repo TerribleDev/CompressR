@@ -14,7 +14,21 @@ namespace CompressR.Sample.Controllers
         {
             ViewBag.Title = "Home Page";
 
-            return View();
+            return View("index");
+        }
+        [Gzip]
+        public ActionResult Gzip()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View("index");
+        }
+        [Deflate]
+        public ActionResult Deflate()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View("index");
         }
     }
 }
