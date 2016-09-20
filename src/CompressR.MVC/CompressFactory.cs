@@ -11,6 +11,10 @@ namespace CompressR.MVC
     {
         public static void Compress(System.Web.Mvc.ResultExecutedContext filterContext, bool requireCompression, string compression, CompressionLevel compressLevel = CompressionLevel.Optimal)
         {
+            if(filterContext.Exception != null && !filterContext.ExceptionHandled)
+            {
+                return;
+            }
             var context = filterContext.RequestContext.HttpContext;
             var compressionAccepted = context.Request.Headers.Get(Constants.AcceptEncoding)?.Split(',').Trim().Any(a => string.Equals(a, compression, StringComparison.OrdinalIgnoreCase)) ?? false;
             if(!compressionAccepted)
