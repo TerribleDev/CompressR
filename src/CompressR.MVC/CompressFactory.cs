@@ -9,8 +9,12 @@ namespace CompressR.MVC
 {
     public static class CompressFactory
     {
-        public static void Compress(System.Web.Mvc.ActionExecutingContext filterContext, bool requireCompression, string compression, CompressionLevel compressLevel = CompressionLevel.Optimal)
+        public static void Compress(System.Web.Mvc.ResultExecutedContext filterContext, bool requireCompression, string compression, CompressionLevel compressLevel = CompressionLevel.Optimal)
         {
+            if(filterContext.Exception != null && !filterContext.ExceptionHandled)
+            {
+                return;
+            }
             var context = filterContext.RequestContext.HttpContext;
             var compressionAccepted = context.Request.Headers.Get(Constants.AcceptEncoding)?.Split(',').Trim().Any(a => string.Equals(a, compression, StringComparison.OrdinalIgnoreCase)) ?? false;
             if(!compressionAccepted)
@@ -28,8 +32,12 @@ namespace CompressR.MVC
             HandleCompression(compression, filterContext, compressLevel);
         }
 
-        public static void Compress(System.Web.Mvc.ActionExecutingContext filterContext, bool requireCompression, CompressionLevel compressLevel = CompressionLevel.Optimal)
+        public static void Compress(System.Web.Mvc.ResultExecutedContext filterContext, bool requireCompression, CompressionLevel compressLevel = CompressionLevel.Optimal)
         {
+            if(filterContext.Exception != null && !filterContext.ExceptionHandled)
+            {
+                return;
+            }
             var context = filterContext.RequestContext.HttpContext;
             var compressionAlgorithm = context.Request.Headers.Get(Constants.AcceptEncoding)?.Split(',').Trim().Intersect(Constants.Compressors, StringComparer.OrdinalIgnoreCase)?.FirstOrDefault();
             if(!string.IsNullOrWhiteSpace(compressionAlgorithm))
@@ -42,9 +50,14 @@ namespace CompressR.MVC
             }
         }
 
-        private static void HandleCompression(string compression, System.Web.Mvc.ActionExecutingContext filterContext, CompressionLevel compressLevel = CompressionLevel.Optimal)
+        private static void HandleCompression(string compression, System.Web.Mvc.ResultExecutedContext filterContext, CompressionLevel compressLevel = CompressionLevel.Optimal)
         {
             var context = filterContext.RequestContext.HttpContext;
+            HandleCompression(compression, filterContext.RequestContext.HttpContext, compressLevel);
+        }
+
+        private static void HandleCompression(string compression, System.Web.HttpContextBase context, CompressionLevel compressLevel)
+        {
             switch(compression)
             {
                 case Constants.Gzip:

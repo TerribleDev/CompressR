@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace CompressR.MVC
 {
@@ -8,7 +6,7 @@ namespace CompressR.MVC
     {
         public static IEnumerable<string> Trim(this IEnumerable<string> arr)
         {
-            foreach (var item in arr)
+            foreach(var item in arr)
             {
                 yield return item.Trim();
             }

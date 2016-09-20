@@ -23,7 +23,11 @@ namespace CompressR.WebApi
 
         protected async Task CompressAction(HttpActionExecutedContext actionExecutedContext, params string[] compressors)
         {
-            if(actionExecutedContext.Response.Content == null)
+            if(actionExecutedContext?.Exception != null)
+            {
+                return;
+            }
+            if(actionExecutedContext?.Response?.Content == null)
             {
                 return;
             }
