@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO.Compression;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace CompressR.MVC
 {
@@ -17,9 +18,10 @@ namespace CompressR.MVC
         /// an action method.
         /// </summary>
         /// <param name="filterContext"></param>
-        public override void OnActionExecuting(System.Web.Mvc.ActionExecutingContext filterContext)
+
+        public override void OnResultExecuted(ResultExecutedContext filterContext)
         {
-            CompressFactory.Compress(filterContext, RequireCompression, Constants.Deflate, CompressionLevel);
+            CompressFactory.Compress(filterContext, RequireCompression, CompressionLevel);
         }
     }
 }

@@ -16,6 +16,10 @@ namespace CompressR.WebApi
 
         public override Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
+            if(cancellationToken.IsCancellationRequested)
+            {
+                return Task.FromResult(0);
+            }
             return base.CompressAction(actionExecutedContext, Constants.Compressors);
         }
     }
