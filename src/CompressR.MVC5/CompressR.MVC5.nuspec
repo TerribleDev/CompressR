@@ -14,7 +14,7 @@
     <copyright>Copyright 2016</copyright>
     <tags>Compression MVC</tags>
     <dependencies>
-      <dependency id="Microsoft.AspNet.Mvc" version="(5.0.0, 6.0.0]" />
+      <dependency id="Microsoft.AspNet.Mvc" version="[5.0.0, 6.0.0)" />
     </dependencies>
   </metadata>
 </package>
