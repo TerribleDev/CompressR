@@ -16,6 +16,12 @@ namespace CompressR.Sample.Controllers
 
             return View("index");
         }
+        public ActionResult NoZip()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View("index");
+        }
         [Gzip]
         public ActionResult Gzip()
         {
