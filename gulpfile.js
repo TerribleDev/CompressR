@@ -5,7 +5,7 @@ var download = require("gulp-download");
 var del = require('del');
 var assemblyInfo = require('gulp-dotnet-assembly-info');
 var xunit = xunit = require('gulp-xunit-runner');
-var version = '1.5.1';
+var version = '1.5.2';
 
 gulp.task('clean', ()=>{
     return del(['src/**/obj/', 'src/**/bin/Release', 'nuget.exe', 'nupkgs'])
@@ -44,7 +44,11 @@ gulp.task('test', ['build'],  function () {
     }));
 });
 gulp.task('pack', ['test'], ()=>{
-   return gulp.src(['src/CompressR.MVC4/*.csproj', 'src/CompressR.MVC5/*.csproj', 'src/CompressR.WebApi/*.csproj', 'src/CompressR/*.csproj'], {read: false})
+   return gulp.src(['src/CompressR.MVC4/*.csproj', 
+   'src/CompressR.MVC5/*.csproj', 
+   'src/CompressR.WebApi/*.csproj', 
+   'src/CompressR/*.csproj', 
+   'src/CompressR.Owin/*.csproj'], {read: false})
     .pipe(nuget.pack({
         build: false,
         symbols: true,

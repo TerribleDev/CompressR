@@ -60,3 +60,22 @@ public class ValuesController : ApiController
     }
 
 ```
+
+## Owin
+
+You can add gzip support through a middleware. Install the package: `Install-Package CompressR.Owin`. Then add `app.Use<GzipMiddleware>();` to your `Startup.cs`.
+
+
+```csharp
+
+        public void Configuration(IAppBuilder app)
+        {
+            app.Use<GzipMiddleware>();
+            app.Run(context =>
+            {
+                context.Response.ContentType = "text/plain";
+                return context.Response.WriteAsync("Hello World!");
+            });
+        }
+
+```

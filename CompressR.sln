@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CompressR.MVC", "src\CompressR.MVC\CompressR.MVC.shproj", "{13E4DCA3-5D4D-4796-B3CF-AD4620E2A2F1}"
 EndProject
@@ -25,11 +25,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressR.WebApiUnitTests", "src\CompressR.WebApiUnitTests\CompressR.WebApiUnitTests.csproj", "{61D97564-ACF6-4396-AB96-2D29CDCC3814}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressR.Owin", "src\CompressR.Owin\CompressR.Owin.csproj", "{4B84A645-A7E3-446E-83B5-5F56D18B47DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressR.Owin.Sample", "src\CompressR.Owin.Sample\CompressR.Owin.Sample.csproj", "{C6DD2187-F71A-4DA3-99B0-47A8CCF10853}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		src\CompressR.MVC\CompressR.MVC.projitems*{b8889368-e350-4b1e-82f5-ea537d6da6e9}*SharedItemsImports = 4
 		src\CompressR.MVC\CompressR.MVC.projitems*{13e4dca3-5d4d-4796-b3cf-ad4620e2a2f1}*SharedItemsImports = 13
 		src\CompressR.MVC\CompressR.MVC.projitems*{256f0ecd-0310-4de9-8334-31a3d3867925}*SharedItemsImports = 4
+		src\CompressR.MVC\CompressR.MVC.projitems*{b8889368-e350-4b1e-82f5-ea537d6da6e9}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +68,14 @@ Global
 		{61D97564-ACF6-4396-AB96-2D29CDCC3814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61D97564-ACF6-4396-AB96-2D29CDCC3814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61D97564-ACF6-4396-AB96-2D29CDCC3814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B84A645-A7E3-446E-83B5-5F56D18B47DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B84A645-A7E3-446E-83B5-5F56D18B47DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B84A645-A7E3-446E-83B5-5F56D18B47DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B84A645-A7E3-446E-83B5-5F56D18B47DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6DD2187-F71A-4DA3-99B0-47A8CCF10853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6DD2187-F71A-4DA3-99B0-47A8CCF10853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6DD2187-F71A-4DA3-99B0-47A8CCF10853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6DD2187-F71A-4DA3-99B0-47A8CCF10853}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
