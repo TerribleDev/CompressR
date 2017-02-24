@@ -14,7 +14,7 @@ namespace CompressR.MVC
 
         public override void OnResultExecuted(ResultExecutedContext filterContext)
         {
-            CompressFactory.Compress(filterContext, RequireCompression, CompressionLevel);
+            CompressFactory.Compress(filterContext, RequireCompression, Constants.Gzip, CompressionLevel);
         }
     }
 }
